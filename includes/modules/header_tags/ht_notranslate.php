@@ -1,18 +1,19 @@
 <?php
-/**
- *
- *  @copyright 2008 - https://www.clicshopping.org
- *  @Brand : ClicShopping(Tm) at Inpi all right Reserved
- *  @Licence GPL 2 & MIT
- *  @licence MIT - Portion of osCommerce 2.4
- *  @Info : https://www.clicshopping.org/forum/trademark/
- *
- */
+  /**
+   *
+   * @copyright 2008 - https://www.clicshopping.org
+   * @Brand : ClicShopping(Tm) at Inpi all right Reserved
+   * @Licence GPL 2 & MIT
+   * @licence MIT - Portion of osCommerce 2.4
+   * @Info : https://www.clicshopping.org/forum/trademark/
+   *
+   */
 
   use ClicShopping\OM\Registry;
   use ClicShopping\OM\CLICSHOPPING;
 
-  class ht_notranslate {
+  class ht_notranslate
+  {
     public $code;
     public $group;
     public $title;
@@ -21,36 +22,41 @@
     public $enabled = false;
     public $languages_array = array();
 
-    public function __construct() {
+    public function __construct()
+    {
       $this->code = get_class($this);
       $this->group = basename(__DIR__);
 
       $this->title = CLICSHOPPING::getDef('module_header_tags_notranslate_title');
       $this->description = CLICSHOPPING::getDef('module_header_tags_notranslate_description');
 
-      if ( defined('MODULE_HEADER_TAGS_NOTRANSLATE_STATUS') ) {
+      if (defined('MODULE_HEADER_TAGS_NOTRANSLATE_STATUS')) {
         $this->sort_order = MODULE_HEADER_TAGS_NOTRANSLATE_SORT_ORDER;
         $this->enabled = (MODULE_HEADER_TAGS_NOTRANSLATE_STATUS == 'True');
       }
     }
 
-    public function execute() {
+    public function execute()
+    {
 
       $CLICSHOPPING_Template = Registry::get('Template');
 
       $meta_tag = '<meta name="google" content="notranslate">';
-      $CLICSHOPPING_Template->addBlock( $meta_tag, $this->group );
+      $CLICSHOPPING_Template->addBlock($meta_tag, $this->group);
     }
 
-    public function isEnabled() {
+    public function isEnabled()
+    {
       return $this->enabled;
     }
 
-    public function check() {
-      return defined( 'MODULE_HEADER_TAGS_NOTRANSLATE_STATUS' );
+    public function check()
+    {
+      return defined('MODULE_HEADER_TAGS_NOTRANSLATE_STATUS');
     }
 
-    public function install() {
+    public function install()
+    {
       $CLICSHOPPING_Db = Registry::get('Db');
 
 
@@ -80,16 +86,18 @@
 
 
       return $CLICSHOPPING_Db->save('configuration', ['configuration_value' => '1'],
-                                                ['configuration_key' => 'WEBSITE_MODULE_INSTALLED']
-                              );
+        ['configuration_key' => 'WEBSITE_MODULE_INSTALLED']
+      );
     }
 
-    public function remove() {
+    public function remove()
+    {
       return Registry::get('Db')->exec('delete from :table_configuration where configuration_key in ("' . implode('", "', $this->keys()) . '")');
     }
 
-    public function keys() {
-    	$keys_array = array();
+    public function keys()
+    {
+      $keys_array = array();
 
       $keys_array[] = 'MODULE_HEADER_TAGS_NOTRANSLATE_STATUS';
       $keys_array[] = 'MODULE_HEADER_TAGS_NOTRANSLATE_SORT_ORDER';
@@ -97,4 +105,5 @@
       return $keys_array;
     }
   }
+
 ?>
