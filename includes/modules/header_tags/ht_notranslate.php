@@ -14,13 +14,13 @@
 
   class ht_notranslate
   {
-    public string $code;
-    public string $group;
+    public $code;
+    public $group;
     public string $title;
     public string $description;
     public ?int $sort_order = 0;
     public bool $enabled = false;
-    public $languages_array = array();
+    public array $languages_array = [];
 
     public function __construct()
     {
